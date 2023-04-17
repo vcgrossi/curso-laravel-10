@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Support;
 use App\Http\Controllers\Controller;
-use illuminate\Http\Request;
+use Illuminate\Http\Request;
 
 class SupportController extends Controller
 {
@@ -15,14 +15,29 @@ class SupportController extends Controller
         return view('admin/supports/index', compact('supports'));
     }
 
+    public function show(string|int $id)
+    {
+
+        if(!$support = Support::find($id)) {
+            return back();
+        };
+
+        return view('admin/supports/show', compact('support'));
+    }
+
     public function create()
     {
         return view('admin/supports/create');
     }
 
-    public function store(Request $request)
+    public function store(Request $request, Support $support)
     {
-        dd($request->all()); 
+        $data = $request->all();
+        $data['status'] = 'a';
+        
+        $support = $support->create($data);
+        
+        return redirect()->route('supports.index');
     }
 }
 

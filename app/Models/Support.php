@@ -9,4 +9,10 @@ use illuminate\Http\Request;
 class Support extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'subject',
+        'body',
+        'status'
+    ];
 }
